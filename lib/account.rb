@@ -10,13 +10,13 @@ class Account
   end
 
   def balance
+    total = 0
     if @transactions.empty?
       return 0
     else @transactions.each do | transaction |
-      total = 0
-      new_total = total + transaction[0].to_i
-      return new_total
-      end
+      total = total + transaction[0].to_i
+      end 
+      return total
     end
   end
 

@@ -24,4 +24,14 @@ RSpec.describe Account do
       expect(account.list_transactions).to eq([[1000, Date.today]])
     end
   end
+
+  context 'multiple deposits' do
+    it 'returns the list of transactions and a cumulative balance' do
+      account = Account.new
+      account.deposit(1000, '10/01/2023')
+      account.deposit(2000, '13/01/2023')
+      expect(account.balance).to eq(3000)
+      expect(account.list_transactions).to eq([[1000, '10/01/2023'], [2000, '13/01/2023']])
+    end
+  end
 end
