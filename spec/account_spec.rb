@@ -16,5 +16,12 @@ RSpec.describe Account do
       expect(account.balance).to eq(1000)
       expect(account.list_transactions).to eq([[1000, '10/01/2023']])
     end
+
+    it 'makes a deposit using default date' do
+      account = Account.new
+      account.deposit(1000)
+      expect(account.balance).to eq(1000)
+      expect(account.list_transactions).to eq([[1000, Date.today]])
+    end
   end
 end
