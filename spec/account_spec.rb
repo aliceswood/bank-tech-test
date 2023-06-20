@@ -1,6 +1,12 @@
 require 'account'
+require 'byebug'
 
 RSpec.describe Account do
+  let(:mock_deposit1) {double(:deposit1, amount: 1000, date: '10/01/2023')}
+  let(:mock_deposit2) {double(:deposit2, amount: 2000, date: '13/01/2023')} 
+  let(:mock_withdrawal1) {double(:withdrawal1, amount: -500, date: '14/01/2023')}
+  let(:mock_withdrawal2) {double(:withdrawal2, amount: -1000, date: '15/01/2023')}
+
   context 'it constructs' do
     it 'constructs with 0 balance and 0 transactions' do
       account = Account.new
@@ -9,77 +15,61 @@ RSpec.describe Account do
     end
   end
 
-  context 'it makes a deposit' do
-    it 'makes a deposit with a given date' do
+    it 'makes a deposit' do
       account = Account.new
-      account.deposit(1000, '10/01/2023')
+      account.deposit(mock_deposit1)     
       expect(account.total_balance).to eq(1000)
-      expect(account.list_transactions).to eq([[1000, '10/01/2023']])
+      expect(account.list_transactions).to eq([mock_deposit1])
     end
-
-    it 'makes a deposit using default date' do
-      account = Account.new
-      account.deposit(1000)
-      expect(account.total_balance).to eq(1000)
-      expect(account.list_transactions).to eq([[1000, Date.today]])
-    end
-  end
 
   context 'multiple deposits' do
     it 'returns the list of transactions and a cumulative balance' do
       account = Account.new
-      account.deposit(1000, '10/01/2023')
-      account.deposit(2000, '13/01/2023')
+      account.deposit(mock_deposit1)  
+      account.deposit(mock_deposit2)    
       expect(account.total_balance).to eq(3000)
-      expect(account.list_transactions).to eq([[1000, '10/01/2023'], [2000, '13/01/2023']])
+      expect(account.list_transactions).to eq([mock_deposit1, mock_deposit2])
     end
   end
 
   context 'withdrawals' do
     it 'makes a withdrawal with a given date' do
       account = Account.new
-      account.withdrawal(500, '14/01/2023')
+      account.withdrawal(mock_withdrawal1)
       expect(account.total_balance).to eq(-500)
-      expect(account.list_transactions).to eq([[-500, '14/01/2023']])
-    end
-
-    it 'makes a withdrawal using the default date' do
-      account = Account.new
-      account.withdrawal(500)
-      expect(account.total_balance).to eq(-500)
-      expect(account.list_transactions).to eq([[-500, Date.today]])
+      expect(account.list_transactions).to eq([mock_withdrawal1])
     end
 
     it 'makes multiple withdrawals and the account balance is cumulative' do
       account = Account.new
-      account.withdrawal(500)
-      account.withdrawal(500, '14/01/2023')
-      expect(account.total_balance).to eq(-1000)
-      expect(account.list_transactions).to eq([[-500, Date.today], [-500, '14/01/2023']])
+      account.withdrawal(mock_withdrawal1)
+      account.withdrawal(mock_withdrawal2)
+      expect(account.total_balance).to eq(-1500)
+      expect(account.list_transactions).to eq([mock_withdrawal1, mock_withdrawal2])
     end
   end
 
   context 'deposits and withdrawals made' do
     it 'makes deposits and withdrawals and the account balance reflects correctly' do
       account = Account.new
-      account.deposit(1000, '10/01/2023')
-      account.deposit(2000, '13/01/2023')
-      account.withdrawal(500)
-      account.withdrawal(500, '14/01/2023')
-      expect(account.total_balance).to eq(2000)
-      expect(account.list_transactions).to eq([[1000, '10/01/2023'], [2000, '13/01/2023'], [-500, Date.today],
-                                               [-500, '14/01/2023']])
+      account.deposit(mock_deposit1)
+      account.deposit(mock_deposit2)
+      account.withdrawal(mock_withdrawal1)
+      account.withdrawal(mock_withdrawal2)
+      expect(account.total_balance).to eq(1500)
+      expect(account.list_transactions).to eq([mock_deposit1, mock_deposit2, mock_withdrawal1,
+                                               mock_withdrawal2])
     end
   end
 
   context 'showing the statement' do
     it 'shows the statement with transactions and the formatted headings' do
       account = Account.new
-      account.deposit(1000, '10/01/2023')
-      account.deposit(2000, '13/01/2023')
-      account.withdrawal(500, '14/01/2023')
+      account.deposit(mock_deposit1)
+      account.deposit(mock_deposit2)
+      account.withdrawal(mock_withdrawal1)
       expect(account.total_balance).to eq(2500)
-      expect(account.list_transactions).to eq([[1000, '10/01/2023'], [2000, '13/01/2023'], [-500, '14/01/2023']])
+      expect(account.list_transactions).to eq([mock_deposit1, mock_deposit2, mock_withdrawal1])
       expect(account.show_statement).to eq(
         "date || credit || debit || balance\n14/01/2023 || || 500 || 2500\n13/01/2023 || 2000 || || 3000\n10/01/2023 || 1000 || || 1000\n"
       )

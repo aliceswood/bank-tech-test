@@ -12,17 +12,17 @@ class Account
   def total_balance
     total = 0
     @transactions.each do |transaction|
-      total += transaction[0].to_i
+      total += transaction.amount.to_i
     end
     total
   end
 
-  def deposit(amount, date = Date.today)
-    @transactions.push([amount, date])
+  def deposit(deposit)
+    @transactions.push(deposit)
   end
 
-  def withdrawal(amount, date = Date.today)
-    @transactions.push([- amount, date])
+  def withdrawal(withdrawal)
+    @transactions.push(withdrawal)
   end
 
   def show_statement
@@ -34,10 +34,10 @@ class Account
   def statement_lines
     statement_lines = []
     @transactions.reverse.each_with_index do |transaction, index|
-      line = if (transaction[0]).positive?
-               "#{transaction[1]} || #{transaction[0]} || || #{current_balance(index)}\n"
+      line = if (transaction.amount).positive?
+               "#{transaction.date} || #{transaction.amount} || || #{current_balance(index)}\n"
              else
-               "#{transaction[1]} || || #{transaction[0].abs} || #{current_balance(index)}\n"
+               "#{transaction.date} || || #{transaction.amount.abs} || #{current_balance(index)}\n"
              end
       statement_lines.push(line)
     end
@@ -47,7 +47,7 @@ class Account
   def current_balance(current_index)
     total = 0
     @transactions.reverse.each_with_index do |transaction, index|
-      total += transaction[0].to_i if index >= current_index
+      total += transaction.amount.to_i if index >= current_index
     end
     total
   end
