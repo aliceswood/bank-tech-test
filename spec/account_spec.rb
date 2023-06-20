@@ -49,5 +49,13 @@ RSpec.describe Account do
       expect(account.balance).to eq(-500)
       expect(account.list_transactions).to eq([[-500, Date.today]])
     end
+
+    it 'makes multiple withdrawals and the account balance is cumulative' do
+      account = Account.new
+      account.withdrawal(500)
+      account.withdrawal(500, '14/01/2023')
+      expect(account.balance).to eq(-1000)
+      expect(account.list_transactions).to eq([[-500, Date.today], [-500, '14/01/2023']])
+    end
   end
 end
