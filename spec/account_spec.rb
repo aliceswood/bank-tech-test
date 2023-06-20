@@ -58,4 +58,16 @@ RSpec.describe Account do
       expect(account.list_transactions).to eq([[-500, Date.today], [-500, '14/01/2023']])
     end
   end
+
+  context 'deposits and withdrawals made' do
+    it 'makes deposits and withdrawals and the account balance reflects correctly' do
+      account = Account.new
+      account.deposit(1000, '10/01/2023')
+      account.deposit(2000, '13/01/2023')
+      account.withdrawal(500)
+      account.withdrawal(500, '14/01/2023')
+      expect(account.balance).to eq(2000)
+      expect(account.list_transactions).to eq([[1000, '10/01/2023'], [2000, '13/01/2023'], [-500, Date.today], [-500, '14/01/2023']])
+    end
+  end
 end
