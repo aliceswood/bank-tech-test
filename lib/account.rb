@@ -24,5 +24,7 @@ class Account
     @transactions.push([amount, date])
   end
 
-
+  def withdrawal(amount, date = Date.today)
+    @transactions.push([- amount, date])
+  end
 end

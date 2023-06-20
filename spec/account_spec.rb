@@ -1,4 +1,4 @@
-require '../lib/account'
+require 'account'
 
 RSpec.describe Account do
   context 'it constructs' do
@@ -32,6 +32,15 @@ RSpec.describe Account do
       account.deposit(2000, '13/01/2023')
       expect(account.balance).to eq(3000)
       expect(account.list_transactions).to eq([[1000, '10/01/2023'], [2000, '13/01/2023']])
+    end
+  end
+
+  context 'withdrawals' do
+    it 'makes a withdrawal with a given date' do
+      account = Account.new
+      account.withdrawal(500, '14/01/2023')
+      expect(account.balance).to eq(-500)
+      expect(account.list_transactions).to eq([[-500, '14/01/2023']])
     end
   end
 end
