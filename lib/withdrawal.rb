@@ -1,17 +1,10 @@
 require 'date'
 
 class Withdrawal
+  attr_reader :amount, :date
+
   def initialize(amount, date = Date.today)
-    @amount = amount
+    @amount = - amount
     @date = date
-    @withdrawal = []
-  end
-
-  def get_withdrawals
-    return @withdrawal
-  end
-
-  def make_withdrawal
-    @withdrawal.push(-@amount, @date)
   end
 end
