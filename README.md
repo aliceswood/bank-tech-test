@@ -58,5 +58,11 @@ I also used this time to create a brief diagram of what classes and methods I th
 
 ![initial plan](./initial_plan.png "Initial Plan")
 
-By creating the above plan, I was able to think through what I would want each of my methods to achieve and what they would need to do this. I initially expected 'deposit' and 'withdrawal' to have 1 argument each (the amount), but I soon realised that in order for the 'show_statement' method to have a date linked to a transaction, I would likely need to pass this as a second argument to the 'deposit' and 'withdrawal' methods. I decided that unless stated, I would have a default value of today's date.
+By creating the above plan, I was able to think through what I would want each of my methods to achieve and what they would need to do this. I initially expected 'deposit' and 'withdrawal' to have 1 argument each (the amount), but I soon realised that in order for the 'show_statement' method to have a date linked to a transaction. I would likely need to pass this as a second argument to the 'deposit' and 'withdrawal' methods. I decided that unless stated, I would have a default value of today's date.
+
+Once I had the deposit and withdrawal methods test driven, the next step was to create the 'show_statement' function which included the current balance for all transactions up to that point. I was difficult at this point to get my head around how to format my test compared to my expected outcome of the method so this took some time to work through.
+
+After acheiving the core functionality of the program, I wanted to extract the methods out into different classes to ensure that each class was reponsible for one aspect of functionality. My plan for predicted classes is below:
+
+![class extraction](./class_extraction.png "Classes Plan")
 
