@@ -42,5 +42,12 @@ RSpec.describe Account do
       expect(account.balance).to eq(-500)
       expect(account.list_transactions).to eq([[-500, '14/01/2023']])
     end
+
+    it 'makes a withdrawal using the default date' do
+      account = Account.new
+      account.withdrawal(500)
+      expect(account.balance).to eq(-500)
+      expect(account.list_transactions).to eq([[-500, Date.today]])
+    end
   end
 end
