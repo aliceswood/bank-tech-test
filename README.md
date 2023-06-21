@@ -2,9 +2,10 @@
 
 Week 10 of Makers Academy - practice take home tech test
 
-## Specification
+The program can be run in IRB and allows a user to make deposits and withdrawals and also view a statement of transactions.
 
-### Requirements
+
+## Requirements
 
 * You should be able to interact with your code via a REPL like IRB or Node.  (You don't need to implement a command line interface that takes input from STDIN.)
 * Deposits, withdrawal.
@@ -46,9 +47,62 @@ So that I know how much money I have
 I would like my bank statement to show my balance after each transaction
 ```
 
-## Self-assessment
+## How to use 
 
-Once you have completed the challenge and feel happy with your solution, here's a form to help you reflect on the quality of your code: https://docs.google.com/forms/d/1Q-NnqVObbGLDHxlvbUfeAC7yBCf3eCjTmz6GOqC9Aeo/edit
+This program was developed using Ruby v3.0.0 and can be run directly from the command line using IRB. To use the app, the following needs to be installed:
+
+- ruby v3.0.0, installed using ```brew install ruby``` and ```rvm use 3.0.0```
+- bundler, installed using ```gem install bundler```
+
+After this, ensure that the repository is cloned to your local machine:
+```
+$ git clone https://github.com/aliceswood/bank-tech-test.git
+$ cd bank-tech-test
+```
+### Run Program
+
+In order to run the program in IRB, this will use the current date as default: 
+```
+$ irb
+$ require './lib/account.rb'
+$ require './lib/deposit.rb'
+$ require './lib/withdrawal.rb'
+$ require './lib/statement.rb'
+$ 
+$ account = Account.new(Statement.new)
+$ 
+$ account.deposit(Deposit.new(500))
+$ account.deposit(Deposit.new(1000))
+$ account.withdrawal(Withdrawal.new(400))
+$ 
+$ account.show_statement
+```
+
+### File Structure
+
+- Account - handles the main logic of the transactions and the printing of the statement
+- Deposit - creates a single deposit
+- Withdrawal - creates a single withdrawal
+- Statement - handles the formatting and creation of the statement
+
+### Criteria Demonstration
+
+To see the acceptance criteria being met:
+
+```
+ruby ./tech_test.rb
+```
+
+![Criteria Met Screenshot](./criteria_met_screenshot.png "Criteria Met")
+
+### Test Coverage
+
+Test coverage is currently at 100% over all files. To run the tests:
+```
+rspec
+```
+
+![Test Coverage](./test_coverage.png "Test Coverage")
 
 ## Approach and Reflection
 
@@ -66,3 +120,10 @@ After acheiving the core functionality of the program, I wanted to extract the m
 
 ![class extraction](./class_extraction.png "Classes Plan")
 
+Therefore my next step was to build each of the individual classes and ensure that their dependencies were mocked so that I could pinpoint which class any errors were coming from. I created an integration test that tested each of the classes and the interaction with each other to ensure this was working as expected also.
+
+### Areas to Improve
+
+- I think that having the separation of classes from the start would have made development a bit more straight forward rather than extracting these at a later stage.
+
+- The Deposit and Withdrawal classes could be combined into one Transactions class and this would have potentially streamlines some of the methods in Account as a result
