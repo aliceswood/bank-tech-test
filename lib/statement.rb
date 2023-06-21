@@ -2,7 +2,7 @@ class Statement
   def generate_statement(transactions)
     statement_headings = "date || credit || debit || balance\n"
 
-    statement_headings + statement_lines(transactions).join
+    puts statement_headings + statement_lines(transactions).join
   end
 
   def statement_lines(transactions)
