@@ -127,3 +127,7 @@ Therefore my next step was to build each of the individual classes and ensure th
 - I think that having the separation of classes from the start would have made development a bit more straight forward rather than extracting these at a later stage.
 
 - The Deposit and Withdrawal classes could be combined into one Transactions class and this would have potentially streamlines some of the methods in Account as a result
+
+- Some more edge cases to be thought of - eg empty amounts for either transaction or a warning if amount is greater than balance
+
+- streamline the generate statement function to avoid DRY code
