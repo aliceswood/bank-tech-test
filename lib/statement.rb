@@ -8,7 +8,7 @@ class Statement
   def statement_lines(transactions)
     statement_lines = []
     transactions.reverse.each_with_index do |transaction, index|
-      line = if (transaction.amount).positive?
+      line = if transaction.amount.positive?
                "#{transaction.date} || #{transaction.amount} || || #{current_balance(transactions, index)}\n"
              else
                "#{transaction.date} || || #{transaction.amount.abs} || #{current_balance(transactions, index)}\n"
